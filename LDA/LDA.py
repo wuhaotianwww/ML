@@ -57,6 +57,9 @@ class LDA:
         self.w13_l3 = (self.w13.T * np.mat(u3).T)[0, 0]
         self.w23_l2 = (self.w23.T * np.mat(u2).T)[0, 0]
         self.w23_l3 = (self.w23.T * np.mat(u3).T)[0, 0]
+        print(self.w12.T)
+        print(self.w13.T)
+        print(self.w23.T)
 
     def predict(self, train_x):
         out = []
