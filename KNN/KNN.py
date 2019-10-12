@@ -48,13 +48,13 @@ class KNN:
         self.root = root
         return root
 
-    def get_dist(self, x1, x2):
+    def getDist(self, x1, x2):
         dist = 0
         for i in range(self.dim):
             dist += (abs(x1[i] - x2[i])*abs(x1[i]-x2[i]))
         return math.sqrt(dist)
 
-    def isinsect(self, node, x, cmp):
+    def isTangency(self, node, x, cmp):
         y = node.feature
         for i in range(self.dim):
             if abs(y[i] - x[i]) < cmp:
@@ -88,7 +88,7 @@ class KNN:
             deep = (deep+1) % self.dim
 
         q = queue.PriorityQueue(maxsize=self.k)
-        dist = -1 * self.get_dist(tempnode.feature, x)
+        dist = -1 * self.getDist(tempnode.feature, x)
         q.put((dist, tempnode))
         if tempnode.father.left == tempnode:
             isfromleft = True
@@ -100,14 +100,14 @@ class KNN:
             temp = q.get()
             cmp = -1.0*temp[0]
             q.put(temp)
-            if self.isinsect(tempnode, x, cmp) or q.qsize() < self.k:
+            if self.isTangency(tempnode, x, cmp) or q.qsize() < self.k:
                 nodelist = [tempnode]
                 if isfromleft:
                     self.dfs(tempnode.right, nodelist)
                 else:
                     self.dfs(tempnode.left, nodelist)
                 for each in nodelist:
-                    dist = -1 * self.get_dist(each.feature, x)
+                    dist = -1 * self.getDist(each.feature, x)
                     if q.qsize() == self.k:
                         temp = q.get()
                         tempdist = temp[0]
